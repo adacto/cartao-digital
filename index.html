@@ -68,22 +68,17 @@
       background: linear-gradient(90deg, var(--amber), var(--amber-lt), var(--amber));
     }
 
-    /* ── avatar initials ── */
+    /* ── avatar photo ── */
     .avatar {
-      width: 72px;
-      height: 72px;
+      width: 88px;
+      height: 88px;
       border-radius: 50%;
-      background: linear-gradient(135deg, #1e3a5f, #0f2640);
-      border: 2px solid var(--amber);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--amber-lt);
-      letter-spacing: -1px;
+      border: 2.5px solid var(--amber);
       margin-bottom: 20px;
-      box-shadow: 0 0 24px rgba(217,119,6,.2);
+      box-shadow: 0 0 28px rgba(217,119,6,.25);
+      object-fit: cover;
+      object-position: center top;
+      display: block;
     }
 
     h1 {
@@ -242,7 +237,7 @@
 
 <div class="card">
 
-  <div class="avatar">AA</div>
+  <img class="avatar" src="foto.png" alt="Adacto Artur Dornas de Oliveira" />
 
   <h1>Adacto Artur<br>Dornas de Oliveira</h1>
 
