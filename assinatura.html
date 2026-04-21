@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Assinatura de E-mail</title>
+  <style>
+    body { background: #f1f5f9; font-family: Arial, sans-serif; padding: 40px 20px; margin: 0; }
+    .wrap { max-width: 600px; margin: 0 auto; }
+    .label { font-size: 12px; color: #64748b; margin-bottom: 8px; }
+    .copy-btn {
+      display: inline-block; margin-bottom: 16px; padding: 8px 16px;
+      background: #d97706; color: #fff; border: none; border-radius: 8px;
+      font-size: 13px; font-weight: 600; cursor: pointer; font-family: Arial, sans-serif;
+    }
+    .copy-btn:hover { background: #b45309; }
+    .preview-box {
+      background: #fff; border: 1px solid #e2e8f0; border-radius: 12px;
+      padding: 24px; margin-bottom: 24px;
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="label">Pré-visualização da assinatura:</div>
+  <div class="preview-box">
+    <div id="signature">
+
+<!-- ============================================================
+     ASSINATURA — copie apenas o conteúdo abaixo desta linha
+     ============================================================ -->
+<table cellpadding="0" cellspacing="0" border="0" style="font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#1e293b;max-width:480px;">
+  <tr>
+    <td style="padding-right:16px;vertical-align:top;">
+      <img src="https://adacto.github.io/cartao-digital/foto.png"
+           width="72" height="72"
+           alt="Adacto Artur"
+           style="border-radius:50%;border:2px solid #d97706;display:block;object-fit:cover;" />
+    </td>
+    <td style="vertical-align:top;border-left:3px solid #d97706;padding-left:16px;">
+      <p style="margin:0 0 2px 0;font-size:15px;font-weight:700;color:#0f172a;line-height:1.2;">
+        Adacto Artur Dornas de Oliveira
+      </p>
+      <p style="margin:0 0 10px 0;font-size:12px;font-weight:600;color:#d97706;letter-spacing:0.5px;text-transform:uppercase;">
+        Gestor Público
+      </p>
+      <table cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td style="padding-bottom:4px;">
+            <span style="font-size:12px;color:#64748b;">&#128222;&nbsp;</span>
+            <a href="tel:+5561999682929" style="font-size:12px;color:#1e293b;text-decoration:none;">(61) 9 9968-2929</a>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-bottom:4px;">
+            <span style="font-size:12px;color:#64748b;">&#9993;&nbsp;</span>
+            <a href="mailto:adactoartur.gestor@gmail.com" style="font-size:12px;color:#1e293b;text-decoration:none;">adactoartur.gestor@gmail.com</a>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-bottom:10px;">
+            <span style="font-size:12px;color:#64748b;">&#128279;&nbsp;</span>
+            <a href="https://www.linkedin.com/in/adacto-artur-dornas-de-oliveira-836aba91" style="font-size:12px;color:#0a66c2;text-decoration:none;">LinkedIn</a>
+            &nbsp;|&nbsp;
+            <a href="https://adacto.github.io/cartao-digital/" style="font-size:12px;color:#d97706;text-decoration:none;font-weight:600;">Cartão Digital</a>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<!-- ============================================================
+     FIM DA ASSINATURA
+     ============================================================ -->
+
+    </div>
+  </div>
+
+  <button class="copy-btn" onclick="copySignature()">Copiar assinatura</button>
+  <div id="msg" style="display:none;font-size:13px;color:#16a34a;margin-top:4px;">&#10003; Copiado! Cole direto no Gmail ou Outlook.</div>
+
+  <div style="background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:20px;font-size:13px;color:#475569;line-height:1.8;">
+    <strong style="color:#0f172a;">Como usar no Gmail:</strong><br>
+    1. Clique em <strong>Copiar assinatura</strong> acima<br>
+    2. No Gmail: &#9881; Configurações → Ver todas → aba <strong>Geral</strong> → <strong>Assinatura</strong><br>
+    3. Crie uma nova assinatura e cole com <strong>Ctrl+V</strong><br>
+    4. Salve no final da página<br><br>
+    <strong style="color:#0f172a;">Como usar no Outlook:</strong><br>
+    1. Arquivo → Opções → Email → <strong>Assinaturas</strong><br>
+    2. Nova → cole com <strong>Ctrl+V</strong> → OK
+  </div>
+</div>
+
+<script>
+  function copySignature() {
+    const el = document.getElementById('signature');
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    document.execCommand('copy');
+    sel.removeAllRanges();
+    document.getElementById('msg').style.display = 'block';
+    setTimeout(() => document.getElementById('msg').style.display = 'none', 3000);
+  }
+</script>
+</body>
+</html>
