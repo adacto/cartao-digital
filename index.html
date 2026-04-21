@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adacto Artur | Gestor Público</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0b1120;
+      --surface:  #111827;
+      --border:   #1e2d45;
+      --amber:    #d97706;
+      --amber-lt: #fbbf24;
+      --text:     #f1f5f9;
+      --muted:    #94a3b8;
+    }
+
+    body {
+      background: var(--bg);
+      font-family: 'Outfit', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      color: var(--text);
+    }
+
+    /* ── background glow ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 20%, rgba(217,119,6,.08) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(30,58,95,.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .card {
+      position: relative;
+      width: 100%;
+      max-width: 480px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 48px 40px 40px;
+      box-shadow: 0 32px 80px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.03) inset;
+      animation: rise .7s cubic-bezier(.22,1,.36,1) both;
+    }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(28px) scale(.97); }
+      to   { opacity: 1; transform: none; }
+    }
+
+    /* ── amber top bar ── */
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 40px; right: 40px;
+      height: 3px;
+      border-radius: 0 0 4px 4px;
+      background: linear-gradient(90deg, var(--amber), var(--amber-lt), var(--amber));
+    }
+
+    /* ── avatar initials ── */
+    .avatar {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1e3a5f, #0f2640);
+      border: 2px solid var(--amber);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--amber-lt);
+      letter-spacing: -1px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 24px rgba(217,119,6,.2);
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -.3px;
+    }
+
+    .title-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      padding: 4px 12px;
+      background: rgba(217,119,6,.12);
+      border: 1px solid rgba(217,119,6,.3);
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--amber-lt);
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 28px 0;
+    }
+
+    /* ── contacts ── */
+    .contacts { display: flex; flex-direction: column; gap: 14px; }
+
+    .contact-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+      color: var(--text);
+      transition: color .2s;
+    }
+    .contact-row:hover { color: var(--amber-lt); }
+    .contact-row:hover .icon-wrap { border-color: var(--amber); background: rgba(217,119,6,.12); }
+
+    .icon-wrap {
+      flex-shrink: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.03);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .2s, border-color .2s;
+    }
+
+    .icon-wrap svg { width: 18px; height: 18px; fill: none; stroke: var(--amber); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+    .contact-info { display: flex; flex-direction: column; }
+    .contact-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .8px; font-weight: 500; }
+    .contact-value { font-size: 14px; font-weight: 500; }
+
+    /* ── buttons ── */
+    .actions { display: flex; gap: 12px; margin-top: 28px; }
+
+    .btn {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 16px;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: all .2s;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--amber), var(--amber-lt));
+      color: #0b1120;
+      box-shadow: 0 4px 20px rgba(217,119,6,.35);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(217,119,6,.45); }
+
+    .btn-secondary {
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,.09); border-color: rgba(217,119,6,.4); }
+
+    .btn-cv {
+      width: 100%;
+      background: transparent;
+      color: var(--amber-lt);
+      border: 1px solid rgba(217,119,6,.4);
+    }
+    .btn-cv:hover { background: rgba(217,119,6,.08); border-color: var(--amber); }
+
+    .btn svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ── QR section ── */
+    .qr-section {
+      margin-top: 28px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: rgba(255,255,255,.02);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    #qrcode canvas, #qrcode img {
+      border-radius: 8px;
+      display: block;
+    }
+
+    .qr-text { flex: 1; }
+    .qr-text strong { font-size: 14px; font-weight: 600; display: block; margin-bottom: 4px; }
+    .qr-text span { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+    /* ── toast ── */
+    .toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #1e293b;
+      border: 1px solid var(--amber);
+      color: var(--amber-lt);
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 500;
+      opacity: 0;
+      transition: all .3s;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    @media (max-width: 420px) {
+      .card { padding: 36px 24px 32px; }
+      .actions { flex-direction: column; }
+      .qr-section { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="card">
+
+  <div class="avatar">AA</div>
+
+  <h1>Adacto Artur<br>Dornas de Oliveira</h1>
+
+  <span class="title-badge">
+    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+    Gestor Público
+  </span>
+
+  <div class="divider"></div>
+
+  <div class="contacts">
+
+    <a class="contact-row" href="tel:+5561999682929">
+      <span class="icon-wrap">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.92 1.18 2 2 0 012.92 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11l-1.27 1.27a16 16 0 006.29 6.29l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+      </span>
+      <span class="contact-info">
+        <span class="contact-label">Telefone</span>
+        <span class="contact-value">(61) 9 9968-2929</span>
+      </span>
+    </a>
+
+    <a class="contact-row" href="mailto:adactoartur.gestor@gmail.com">
+      <span class="icon-wrap">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </span>
+      <span class="contact-info">
+        <span class="contact-label">E-mail</span>
+        <span class="contact-value">adactoartur.gestor@gmail.com</span>
+      </span>
+    </a>
+
+    <a class="contact-row" href="https://www.linkedin.com/in/adacto-artur-dornas-de-oliveira-836aba91" target="_blank" rel="noopener">
+      <span class="icon-wrap">
+        <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      </span>
+      <span class="contact-info">
+        <span class="contact-label">LinkedIn</span>
+        <span class="contact-value">Adacto Artur Dornas</span>
+      </span>
+    </a>
+
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-primary" onclick="downloadVCard()">
+      <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Salvar Contato
+    </button>
+    <button class="btn btn-secondary" onclick="copyLink()">
+      <svg viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+      Copiar Link
+    </button>
+  </div>
+
+  <a class="btn btn-cv" href="https://drive.google.com/file/d/1gnuUb6GxieUnjoa3EtSKUroWFf9kVi7N/view?usp=drive_link" target="_blank" rel="noopener" style="margin-top:12px; text-decoration:none;">
+    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+    Visualizar Currículo (PDF)
+  </a>
+
+  <div class="qr-section">
+    <div id="qrcode"></div>
+    <div class="qr-text">
+      <strong>Escaneie o QR Code</strong>
+      <span>Aponta direto para o perfil no LinkedIn — funciona em qualquer câmera.</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  /* QR Code */
+  new QRCode(document.getElementById('qrcode'), {
+    text: 'https://www.linkedin.com/in/adacto-artur-dornas-de-oliveira-836aba91',
+    width: 96,
+    height: 96,
+    colorDark: '#f1f5f9',
+    colorLight: '#111827',
+    correctLevel: QRCode.CorrectLevel.M
+  });
+
+  /* vCard download */
+  function downloadVCard() {
+    const vcf = [
+      'BEGIN:VCARD',
+      'VERSION:3.0',
+      'FN:Adacto Artur Dornas de Oliveira',
+      'N:de Oliveira;Adacto Artur Dornas;;;',
+      'TITLE:Gestor Público',
+      'TEL;TYPE=CELL:+5561999682929',
+      'EMAIL:adactoartur.gestor@gmail.com',
+      'URL:https://www.linkedin.com/in/adacto-artur-dornas-de-oliveira-836aba91',
+      'END:VCARD'
+    ].join('\r\n');
+
+    const blob = new Blob([vcf], { type: 'text/vcard;charset=utf-8' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href     = url;
+    a.download = 'Adacto_Artur.vcf';
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('Contato salvo com sucesso!');
+  }
+
+  /* Copy link */
+  function copyLink() {
+    const url = window.location.href !== 'about:blank' ? window.location.href : 'https://www.linkedin.com/in/adacto-artur-dornas-de-oliveira-836aba91';
+    navigator.clipboard.writeText(url).then(() => showToast('Link copiado!'));
+  }
+
+  /* Toast */
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+  }
+</script>
+</body>
+</html>
