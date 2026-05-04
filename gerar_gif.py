@@ -14,7 +14,7 @@ MUTED   = (120, 140, 170)
 SOFT    = ( 40,  65, 110)
 
 W, H = 700, 390   # frame size
-TOTAL = 52        # total frames
+TOTAL = 80        # total frames
 frames = []
 
 def ease(t):        return t * t * (3 - 2*t)          # smooth step
@@ -209,12 +209,12 @@ for f in range(TOTAL):
     if f % 10 == 0:
         print(f"  frame {f+1}/{TOTAL}")
 
-# Hold last frame 2x
-frames += [frames[-1]] * 8
+# Hold last frame
+frames += [frames[-1]] * 12
 
 # ── Export GIF ────────────────────────────────────
 out = "C:/Users/artur/cartao-digital-repo/cartao-animado.gif"
-durations = [80] * TOTAL + [120] * 8
+durations = [120] * TOTAL + [180] * 12
 frames[0].save(
     out,
     save_all=True,
